@@ -80,4 +80,18 @@
     KONASHI_SPI_BIT_ORDER_LSB_FIRST: 0,
     KONASHI_SPI_BIT_ORDER_MSB_FIRST: 1
   }
+
+  class Konashi {
+    /**
+     * Create konashi UUID
+     *
+     * @param {String} part 4 characters hex
+     * @returns {string}
+     * @private
+     */
+    static _createUUID(part) {
+      return '229b' + part + '-03fb-40da-98a7-b0def65c2d4b'
+    }
+  }
+
 })
