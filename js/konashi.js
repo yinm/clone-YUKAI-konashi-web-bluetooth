@@ -465,5 +465,24 @@
 
     // PWM }
 
+    // { UART
+
+    /**
+     * Set UART mode
+     *
+     * @param {Number} mode Konashi.KONASHI_UART_(DISABLE|ENABLE)
+     * @returns {Promise<void>}
+     */
+    uartMode(mode) {
+      if (
+        mode != Konashi.KONASHI_UART_DISABLE &&
+        mode != Konashi.KONASHI_UART_ENABLE
+      ) {
+        return Promise.reject(new Error('Invalid UART mode.'))
+      }
+
+      return this._c12c.uartConfig.writeValue(new Uint8Array([mode]))
+    }
+
   }
 })
