@@ -404,5 +404,24 @@
       return this._c12c.pwmConfig.writeValue(data)
     }
 
+    /**
+     * Set the PWM cycle
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} period
+     * @returns {Promsie<void>}
+     */
+    pwmPeriod(pin, period) {
+      const data = new Uint8Array([
+        pin,
+        (period >> 24) & 0xff,
+        (period >> 16) & 0xff,
+        (period >> 8) & 0xff,
+        (period >> 0) & 0xff
+      ])
+
+      return this._c12c.pwmParameter.writeValue(data)
+    }
+
   }
 })
