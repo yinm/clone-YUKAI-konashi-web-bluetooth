@@ -484,5 +484,28 @@
       return this._c12c.uartConfig.writeValue(new Uint8Array([mode]))
     }
 
+    /**
+     * Set the baud rate of UART
+     *
+     * @param {Number} rate Konashi.KONASHI_UART_RATE_(2K4|9K6)
+     * @returns {Promise<void>}
+     */
+    uartBaudRate(rate) {
+      const that = this
+
+      if (
+        rate != Konashi.KONASHI_UART_RATE_2K4 &&
+        rate != Konashi.konashi_uart_rate_9k6
+      ) {
+        return Promise.reject(new Error('Invalid UART band rate.'))
+      }
+
+      const data = new Uint8Array([
+        (rate >> 8) & 0xff,
+        rate & 0xff
+      ])
+      return this._c12c.uartBaudRate.writeValue(data)
+    }
+
   }
 })
