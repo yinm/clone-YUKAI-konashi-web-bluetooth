@@ -507,5 +507,25 @@
       return this._c12c.uartBaudRate.writeValue(data)
     }
 
+    /**
+     * Write UART data
+     *
+     * @param {Uint8Array} data
+     * @returns {Promise<void>}
+     */
+    uartWrite(data) {
+      const chunkSize = Konashi.KONASHI_UART_DATA_MAX_LENGTH
+
+      if (data.length <= chunkSize) {
+        return this._uartWrite(data)
+      }
+      let chunks = []
+      for (let i = 0; i < data.length; i += chunkSize) {
+        chunks.push(data.slice(i, i + chunkSize))
+      }
+
+      return this._uartWriteChunks(chunks, 0)
+    }
+
   }
 })
