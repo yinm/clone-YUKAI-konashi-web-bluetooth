@@ -166,5 +166,27 @@
       })
     }
 
+    /**
+     * constructor
+     *
+     * @param {BluetoothDevice} device
+     */
+    constructor(device) {
+      // BluetoothDevice
+      this._device = device
+      // BluetoothGATTRemoteServer
+      this._gatt = null
+      // BluetoothGATTService
+      this._service = null
+      // Object<String, BluetoothGATTCharacteristic>
+      this._c12c = {}
+      // Object<String, Number>
+      this._state = {pioOutputs: 0, pwmModes: 0}
+
+      for (let key in consts) {
+        this[key] = consts[key]
+      }
+    }
+
   }
 })
