@@ -450,5 +450,20 @@
       return this.pwmDuty(pin, duty)
     }
 
+    /**
+     * Write PWM ratio
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} ratio (0-100)
+     * @returns {Promise<void>}
+     */
+    pwmWrite(pin, ratio) {
+      ratio = Math.min(100, Math.max(0, ratio))
+      const duty = Konashi.KONASHI_PWM_LED_PERIOD * ratio / 100
+      return this.pwmDuty(pin, duty)
+    }
+
+    // PWM }
+
   }
 })
