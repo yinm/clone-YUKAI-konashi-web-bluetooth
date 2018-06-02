@@ -259,6 +259,8 @@
       })
     }
 
+    // { Digital I/O
+
     /**
      * Set konashi's pin mode
      *
@@ -340,6 +342,38 @@
 
       return this._c12c.pioOutput.writeValue(new Uint8Array([this._state.pioOutputs]))
     }
+
+    // Digital I/O}
+
+    // {Analog Input
+
+    /**
+     * Read an analog pin
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @returns {Promsie<number>}
+     */
+    analogRead(pin) {
+      let c
+
+      switch (pin) {
+        case Konashi.AIO0:
+          c = this._c12c.analogRead0
+          break
+        case Konashi.AIO1:
+          c = this._c12c.analogRead1
+          break
+        case Konashi.AIO2:
+          c = this._c12c.analogRead2
+          break
+      }
+
+      return c.readValue().then(buf => {
+        return buf.getUint8(0) << 8 | buf.getUint8(1)
+      })
+    }
+
+    // Analog Input }
 
   }
 })
