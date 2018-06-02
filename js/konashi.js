@@ -423,5 +423,26 @@
       return this._c12c.pwmParameter.writeValue(data)
     }
 
+    /**
+     * Set the duty cycle
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} duty Please specify the units as microseconds (us) in 32bits.
+     * @returns {Promise<void>}
+     */
+    pwmDuty(pin, duty) {
+      duty = parseInt(duty)
+      const data = new Uint8Array([
+        pin,
+        (duty >> 24) & 0xff,
+        (duty >> 16) & 0xff,
+        (duty >> 8) & 0xff,
+        (duty >> 0) & 0xff
+      ])
+
+      console.log(`pwmDuty: ${pin} ${duty}`)
+      return this._c12c.pwmDuty.writeValue(data)
+    }
+
   }
 })
