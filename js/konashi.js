@@ -626,5 +626,17 @@
       return this._i2cWriteChunks(address, chunks, 0)
     }
 
+    _i2cWriteChunks(address, chunks, index) {
+      if (chunks.length <= index) {
+        return Promise.resolve()
+      }
+
+      const that = this
+      return this._i2cWrite(chunks[index])
+        .then(() => {
+          return that._i2cWriteChunks(chunks, index + 1)
+        })
+    }
+
   }
 })
