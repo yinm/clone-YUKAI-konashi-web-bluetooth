@@ -100,5 +100,38 @@
     static get _serviceUID() {
       return Konashi._createUUID('ff00')
     }
+
+    /**
+     * Returns konashi's UUID with label
+     *
+     * @returns {Object<String, String>} key: label, value: UUID
+     */
+    static get c12cUUIDs() {
+      return {
+        analogInput: Konashi._createUUID('3008'),
+        pioSetting: Konashi._createUUID('3000'),
+        pioOutput: Konashi._createUUID('3002'),
+        pioPullup: Konashi._createUUID('3001'),
+        pioInputNotification: Konashi._createUUID('3003'),
+        pwmConfig: Konashi._createUUID('3004'),
+        pwmParameter: Konashi._createUUID('3005'),
+        pwmDuty: Konashi._createUUID('3006'),
+        analogDrive: Konashi._createUUID('3007'),
+        analogRead0: Konashi._createUUID('3008'),
+        analogRead1: Konashi._createUUID('3009'),
+        analogRead2: Konashi._createUUID('300a'),
+        i2cConfig: Konashi._createUUID('300b'),
+        i2cStartStop: Konashi._createUUID('300c'),
+        i2cWrite: Konashi._createUUID('300d'),
+        i2cReadParameter: Konashi._createUUID('300e'),
+        i2cRead: Konashi._createUUID('300f'),
+        uartConfig: Konashi._createUUID('3010'),
+        uartBaudRate: Konashi._createUUID('3011'),
+        uartTx: Konashi._createUUID('3012'),
+        uartRxNotification: Konashi._createUUID('3013'),
+        hardwareReset: Konashi._createUUID('3014'),
+        hardwareLowBatteryNotification: Konashi._createUUID('3015'),
+      }
+    }
   }
 })
