@@ -527,5 +527,17 @@
       return this._uartWriteChunks(chunks, 0)
     }
 
+    _uartWriteChunks(chunks, index) {
+      if (chunks.length <= index) {
+        return Promise.resolve()
+      }
+
+      const that = this
+      return this._uartWrite(chunks[index])
+        .then(() => {
+          return that._uartWriteChunks(chunks, index + 1)
+        })
+    }
+
   }
 })
