@@ -653,5 +653,19 @@
       return this._c12c.i2cWrite.writeValue(writeData)
     }
 
+    i2cRead(address, length) {
+    }
+
+    // I2C }
+
+    // { SPI
+
+    // TODO
+    spiMode(mode, speed, bitOrder) {}
+    spiWrite(data) {}
+    spiRead() {}
+
+    // SPI }
+
   }
 })
