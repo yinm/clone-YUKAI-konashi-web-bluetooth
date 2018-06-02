@@ -87,11 +87,18 @@
      *
      * @param {String} part 4 characters hex
      * @returns {string}
-     * @private
      */
     static _createUUID(part) {
       return '229b' + part + '-03fb-40da-98a7-b0def65c2d4b'
     }
-  }
 
+    /**
+     * Returns Konashi's service UUID
+     *
+     * @returns {String}
+     */
+    static get _serviceUID() {
+      return Konashi._createUUID('ff00')
+    }
+  }
 })
