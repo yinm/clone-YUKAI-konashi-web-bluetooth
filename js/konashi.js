@@ -259,5 +259,30 @@
       })
     }
 
+    /**
+     * Set konashi's pin mode
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} flag Konashi.(INPUT|OUTPUT)
+     * @returns {Promise<void>}
+     */
+    pinMode(pin, flag) {
+      const that = this
+
+      return new Promise((resolve, reject) => {
+        that._c12c.pioSetting.readValue()
+          .then(v => {
+            let data = v.getUint8(0)
+            if (flag == Konashi.OUTPUT) {
+              data |= 0x01 << pin
+            } else {
+              data &= ~(0x01 << pin) & 0xff
+            }
+            this._c12c.pioSetting.writeValue(new Uint8Array([data]))
+              .then(resolve, reject)
+          })
+      })
+    }
+
   }
 })
