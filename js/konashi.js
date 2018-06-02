@@ -240,5 +240,18 @@
       })
     }
 
+    // TODO
+    isConnected() {
+    }
+
+    /**
+     * Returns peripheral name
+     *
+     * @returns {String}
+     */
+    name() {
+      return this._device.name
+    }
+
   }
 })
