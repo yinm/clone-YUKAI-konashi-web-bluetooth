@@ -577,5 +577,17 @@
       return this._c12c.i2cConfig.writeValue(new Uint8Array([mode]))
     }
 
+    i2cStopCondition() {
+      return this._i2cSendCondition(Konashi.KONASHI_I2C_STOP_CONDITION)
+    }
+
+    i2cStartCondition() {
+      return this._i2cSendCondition(Konashi.KONASHI_I2C_START_CONDITION)
+    }
+
+    i2cRestartCondition() {
+      return this._i2cSendCondition(Konashi.KONASHI_I2C_RESTART_CONDITION)
+    }
+
   }
 })
