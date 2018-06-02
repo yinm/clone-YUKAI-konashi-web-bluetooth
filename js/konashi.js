@@ -605,5 +605,26 @@
       return this._c12c.i2cStartStop.writeValue(new Uint8Array([condition]))
     }
 
+    /**
+     * Write I2C data
+     *
+     * @param {Number} address
+     * @param {Uint8Array} data
+     * @returns {Promise<void>}
+     */
+    i2cWrite(address, data) {
+      const chunkSize = Konashi.KONASHI_I2C_DATA_MAX_LENGTH
+      if (data.length <= chunkSize) {
+        return this._i2cWrite(data)
+      }
+
+      let chunks = []
+      for (let i = 0; i < data.length; i += chunkSize) {
+        chunks.push(data.slice(i, i+ chunkSize))
+      }
+
+      return this._i2cWriteChunks(address, chunks, 0)
+    }
+
   }
 })
