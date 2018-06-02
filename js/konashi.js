@@ -556,5 +556,26 @@
 
     // UART }
 
+    // { I2C
+
+    /**
+     * Set I2C mode
+     *
+     * @param {Number} mode Konashi.KONASHI_I2C_(DISABLE|ENABLE|ENABLE_100K|ENABLE_400K)
+     * @returns {Promise<void>}
+     */
+    i2cMode(mode) {
+      if (
+        mode != Konashi.KONASHI_I2C_DISABLE &&
+        mode != Konashi.KONASHI_I2C_ENABLE &&
+        mode != Konashi.KONASHI_I2C_ENABLE_100K &&
+        mode != Konashi.KONASHI_I2C_ENABLE_400K
+      ) {
+        return Promise.reject(new Error('Invalid I2C mode'))
+      }
+
+      return this._c12c.i2cConfig.writeValue(new Uint8Array([mode]))
+    }
+
   }
 })
