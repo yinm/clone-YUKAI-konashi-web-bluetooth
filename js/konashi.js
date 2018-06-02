@@ -97,7 +97,7 @@
      *
      * @returns {String}
      */
-    static get _serviceUID() {
+    static get _serviceUUID() {
       return Konashi._createUUID('ff00')
     }
 
@@ -106,7 +106,7 @@
      *
      * @returns {Object<String, String>} key: label, value: UUID
      */
-    static get c12cUUIDs() {
+    static get _c12cUUIDs() {
       return {
         analogInput: Konashi._createUUID('3008'),
         pioSetting: Konashi._createUUID('3000'),
@@ -186,6 +186,58 @@
       for (let key in consts) {
         this[key] = consts[key]
       }
+    }
+
+    /**
+     * Connect to Konashi
+     *
+     * Assign `_gatt` and `_service` properties when
+     * the connection has been made.
+     *
+     * @returns {Promise<Konashi>}
+     */
+    connect() {
+      const that = this
+
+      return new Promise((resolve, reject) => {
+        that._device.gatt.connect()
+          .then(
+            gatt => {
+              that._gatt = gatt
+              return gatt.getPrimaryService(Konashi._serviceUUID)
+            },
+            e => reject(e)
+          )
+          .then(
+            service => {
+              that._service = service
+              let promises = []
+              let keys = []
+
+              for (let key in Konashi._c12cUUIDs) {
+                keys.push(key)
+              }
+
+              keys.forEach((label, i) => {
+                promises.push(
+                  that._service.getCharacteristic(Konashi._c12cUUIDs[label]).then(
+                    c => {
+                      // TODO: Watch changes of all characteristics
+                      that._c12c[label] = c
+                      Promise.resolve()
+                    }
+                  )
+                )
+              })
+              return Promise.all(promises)
+            },
+            e => reject(e)
+          )
+          .then(
+            () => resolve(that),
+            e => reject(e)
+          )
+      })
     }
 
   }
