@@ -444,5 +444,11 @@
       return this._c12c.pwmDuty.writeValue(data)
     }
 
+    pwmLedDrive(pin, ratio) {
+      ratio = Math.min(100.0, Math.max(0.0, ratio))
+      const duty = Konashi.KONASHI_PWM_LED_PERIOD * ratio / 100
+      return this.pwmDuty(pin, duty)
+    }
+
   }
 })
