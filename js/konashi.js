@@ -667,5 +667,41 @@
 
     // SPI }
 
+    // { Hardware Control
+
+    disconnect() {
+      return this._gatt.disconnect()
+    }
+
+    reset() {
+      return this._c12c.hardwareReset.writeValue(new Uint8Array([1]))
+    }
+
+    /**
+     * Read battery level
+     *
+     * @returns {Promise<number>}
+     */
+    batteryLevelRead() {
+      return new Promise((resolve, reject) => {
+        this._gatt.getPrimaryService('battery_service')
+          .then(service => {
+            return service.getCharacteristic('battery_level')
+          })
+          .then(v => {
+            resolve(new Uint8Array(v)[0])
+          })
+      })
+    }
+
+    /**
+     * TODO: Read device's RSSI
+     *
+     * @returns {Number} RSSI
+     */
+    signalStrengthRead() {}
+
+    // Hardware Control }
+
   }
 })
