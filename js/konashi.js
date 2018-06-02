@@ -375,5 +375,34 @@
 
     // Analog Input }
 
+    // { PWM
+
+    /**
+     * Set PWM mode
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} mode Konashi.(KONASHI_PWM_ENABLE|KONASHI_PWM_ENABLE_LED_MODE)
+     * @returns {Promsie<void>}
+     */
+    pwmMode(pin, mode) {
+      console.log(`pwmMode: ${pin} ${mode}`)
+      if (mode == Konashi.KONASHI_PWM_ENABLE || mode == Konashi.KONASHI_PWM_ENABLE_LED_MODE) {
+        this._state.pwmModes |= 0x01 << pin
+      } else {
+        this._state.pwmModes &= ~(0x01 << pin) & 0xff
+      }
+
+      const that = this
+      const data = new Uint8Array([this._state.pwmModes])
+
+      if (mode == Konashi.KONASHI_PWM_ENABLE_LED_MODE) {
+        return this._c12c.pwmConfig.writeValue(data)
+          .then(() => that.pwmPeriod(pin, Konashi.KONASHI_PWM_LED_PERIOD))
+          .then(() => that.pwmDuty(pin, 0))
+      }
+
+      return this._c12c.pwmConfig.writeValue(data)
+    }
+
   }
 })
