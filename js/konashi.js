@@ -589,5 +589,21 @@
       return this._i2cSendCondition(Konashi.KONASHI_I2C_RESTART_CONDITION)
     }
 
+    /**
+     * @param {Number} condition Konashi.KONASHI_I2C_(STOP|START|RESTART)_CONDITION
+     * @returns {*}
+     */
+    _i2cSendCondition(condition) {
+      if (
+        condition != Konashi.KONASHI_I2C_STOP_CONDITION &&
+        condition != Konashi.KONASHI_I2C_START_CONDITION &&
+        condition != Konashi.KONASHI_I2C_RESTART_CONDITION
+      ) {
+        return Promise.reject(new Error('Invalid I2C condition'))
+      }
+
+      return this._c12c.i2cStartStop.writeValue(new Uint8Array([condition]))
+    }
+
   }
 })
