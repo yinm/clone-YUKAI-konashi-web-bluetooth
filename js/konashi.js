@@ -638,5 +638,20 @@
         })
     }
 
+    _i2cWrite(address, data) {
+      if (Konashi.KONASHI_I2C_DATA_MAX_LENGTH < data.length) {
+        return Promise.reject(new Error(`The data size has to be less than ${Konashi.KONASHI_I2C_DATA_MAX_LENGTH}.`))
+      }
+
+      const writeData = new Uint8Array(Konashi.KONASHI_I2C_DATA_MAX_LENGTH + 2)
+      writeData[0] = data.length + 1
+      writeData[1] = (address << 1) & 0b11111110
+      data.forEach((v, i) => {
+        writeData[i + 2] = v
+      })
+
+      return this._c12c.i2cWrite.writeValue(writeData)
+    }
+
   }
 })
