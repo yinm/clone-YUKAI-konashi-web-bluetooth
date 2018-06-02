@@ -284,5 +284,30 @@
       })
     }
 
+    /**
+     * Set pullup mode
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} mode Konashi.(PULLUP|NO_PULLS)
+     * @returns {Promise<Void>}
+     */
+    pinPullup(pin, mode) {
+      const that = this
+
+      return new Promise((resolve, reject) => {
+        that._c12c.pioPullup.readValue()
+          .then(v => {
+            let data = v.getUint(8)
+            if (mode == Konashi.PULLUP) {
+              data |= 0x01 << pin
+            } else {
+              data &= ~(0x01 << pin)
+            }
+            this._c12c.pioPullup.writeValue(new Uint8Array([data]))
+              .then(resolve, reject)
+          })
+      })
+    }
+
   }
 })
