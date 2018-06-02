@@ -539,5 +539,22 @@
         })
     }
 
+    _uartWrite(data) {
+      if (Konashi.KONASHI_UART_DATA_MAX_LENGTH < data.length) {
+        return Promise(new Error(`The data size has to be less than ${Konashi.KONASHI_UART_DATA_MAX_LENGTH}.`))
+      }
+
+      let writeData = new Uint8Array(data.length + 1)
+      writeData[0] = data.length
+
+      data.forEach((v, i) => {
+        writeData[i + 1] = v
+      })
+
+      return this._c12c.uartTx.writeValue(writeData)
+    }
+
+    // UART }
+
   }
 })
