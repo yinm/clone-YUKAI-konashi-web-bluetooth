@@ -322,5 +322,24 @@
         })
     }
 
+    /**
+     * Write value to a digital pin
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @param {Number} value Konashi.(LOW|HIGH)
+     * @returns {Promise<void>}
+     */
+    digitalWrite(pin, value) {
+      let data
+
+      if (value == Konashi.HIGH) {
+        this._state.pioOutputs |= 0x01 << pin
+      } else {
+        this._state.pioOutputs &= ~(0x01 << pin) & 0xff
+      }
+
+      return this._c12c.pioOutput.writeValue(new Uint8Array([this._state.pioOutputs]))
+    }
+
   }
 })
