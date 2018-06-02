@@ -702,6 +702,11 @@
     signalStrengthRead() {}
 
     // Hardware Control }
-
   }
-})
+
+  for (let key in consts) {
+    Konashi[key] = consts[key]
+  }
+
+  window.Konashi = Konashi
+})() // root
