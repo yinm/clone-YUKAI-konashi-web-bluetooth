@@ -309,5 +309,18 @@
       })
     }
 
+    /**
+     * Read a value of digital pin
+     *
+     * @param {Number} pin Konashi.PIO[0-7]
+     * @returns {Promise<number>} Konashi.(LOW|HIGH)
+     */
+    digitalRead(pin) {
+      return this._c12c.pioInputNotification.readValue()
+        .then(buf => {
+          return (buf.getUint8(0) >> pin) & 0x01
+        })
+    }
+
   }
 })
