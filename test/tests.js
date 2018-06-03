@@ -17,5 +17,16 @@ Konashi.find(true).then(k => {
         })
     })
 
+    QUnit.test('OUTPUT', assert => {
+      return k.pinMode(k.PIO0, k.OUTPUT)
+        .then(() => k.pinMode(k.PIO1, k.OUTPUT))
+        .then(() => k.pinMode(k.PIO2, k.OUTPUT))
+        .then(() => k.pinMode(k.PIO3, k.OUTPUT))
+        .then(() => k.pinMode(k.PIO4, k.OUTPUT))
+        .then(() => {
+          assert.ok(true)
+        })
+    })
+
   })
 })
