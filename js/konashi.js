@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 (() => {
   const consts = {
@@ -149,7 +149,7 @@
 
       return new Promise((resolve, reject) => {
         navigator.bluetooth
-          .requestDrive(options)
+          .requestDevice(options)
           .then(
             d => {
               let konashi = new Konashi(d)
