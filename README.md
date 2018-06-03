@@ -1,1 +1,1 @@
-# clone-YUKAI-konashi-web-bluetooth
+Clone [YUKAI/konashi-web-bluetooth: konashi SDK for Web Bluetooth](https://github.com/YUKAI/konashi-web-bluetooth) for study.
