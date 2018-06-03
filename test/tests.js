@@ -3,3 +3,19 @@ QUnit.test('.find', assert => {
     assert.ok(_k instanceof Konashi)
   })
 })
+
+Konashi.find(true).then(k => {
+  QUnit.module('.pinMode', () => {
+    QUnit.test('INPUT', assert => {
+      return k.pinMode(k.PIO0, k.INPUT)
+        .then(() => k.pinMode(k.PIO1, k.INPUT))
+        .then(() => k.pinMode(k.PIO2, k.INPUT))
+        .then(() => k.pinMode(k.PIO3, k.INPUT))
+        .then(() => k.pinMode(k.PIO4, k.INPUT))
+        .then(() => {
+          assert.ok(true)
+        })
+    })
+
+  })
+})
