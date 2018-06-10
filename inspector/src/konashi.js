@@ -1,6 +1,4 @@
 'use strict';
-(() => {
-
 const consts = {
   HIGH: 1,
   LOW: 0,
@@ -84,7 +82,7 @@ const consts = {
 
 class Konashi {
   /**
-   * Create konashi UUID
+   * Create Konashi UUID
    *
    * @param {String} part 4 characters hex
    * @returns {String}
@@ -94,7 +92,7 @@ class Konashi {
   }
 
   /**
-   * Returns konashi's service UUID
+   * Returns Konashi's service UUID
    *
    * @returns {String}
    */
@@ -103,7 +101,7 @@ class Konashi {
   }
 
   /**
-   * Returns konashi's UUID with label
+   * Returns Konashi's UUID with label
    *
    * @returns {Object<String, String>} key: label, value: UUID
    */
@@ -191,7 +189,7 @@ class Konashi {
   }
 
   /**
-   * Connect to konashi
+   * Connect to Konashi
    *
    * Assign `_gatt` and `_service` properties when
    * the connection has been made.
@@ -261,7 +259,7 @@ class Konashi {
   // { Digital I/O
 
   /**
-   * Set konashi's pin mode
+   * Set Konashi's pin mode
    *
    * @param {Number} pin Konashi.PIO[0-7]
    * @param {Number} flag Konashi.(INPUT|OUTPUT)
@@ -673,6 +671,4 @@ for (let key in consts) {
     Konashi[key] = consts[key];
 }
 
-window.Konashi = Konashi;
-
-})(); // root
+export default Konashi
