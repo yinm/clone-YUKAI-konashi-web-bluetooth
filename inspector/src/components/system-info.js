@@ -11,6 +11,7 @@ class SystemInfo extends Component {
     }
 
     this.handleClick = this.handleClick.bind(this)
+    this.startPio = this.startPio.bind(this)
   }
 
   handleClick() {
@@ -32,6 +33,47 @@ class SystemInfo extends Component {
     }
   }
 
+  startPio() {
+    if (this.state.device === undefined) {
+      return
+    }
+
+    const k = this.state.device
+    k.pinMode(k.PIO0, k.INPUT)
+      .then(() => k.pinMode(k.PIO1, k.OUTPUT))
+      .then(() => k.pinMode(k.PIO2, k.OUTPUT))
+      .then(() => k.pinMode(k.PIO3, k.OUTPUT))
+      .then(() => k.pinMode(k.PIO4, k.OUTPUT))
+      .then(() => {
+        let i = 0
+        let cancelRead = false
+        let timeline = [
+          [k.PIO1, k.HIGH],
+          [k.PIO1, k.LOW],
+          [k.PIO2, k.HIGH],
+          [k.PIO2, k.LOW],
+          [k.PIO3, k.HIGH],
+          [k.PIO3, k.LOW],
+          [k.PIO4, k.HIGH],
+          [k.PIO4, k.LOW]
+        ]
+
+        setInterval(() => {
+          cancelRead = true
+          if (timeline.length <= i) {
+            i = 0
+          }
+
+          let values = timeline[i]
+          k.digitalWrite(values[0], values[1]).then(() => {
+            cancelRead = false
+          })
+
+          i++
+        }, 200)
+      })
+  }
+
   render() {
     return (
       <div>
@@ -42,6 +84,10 @@ class SystemInfo extends Component {
           <tr>
             <td>Device Name:</td>
             <td>{this.state.deviceName}</td>
+          </tr>
+          <tr>
+            <td>PIO</td>
+            <td><button onClick={this.startPio}>start</button></td>
           </tr>
           </tbody>
         </table>
